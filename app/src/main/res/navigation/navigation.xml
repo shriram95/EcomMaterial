@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation"
+            app:startDestination="@id/home3">
+    <fragment android:id="@+id/home3" android:name="com.example.ecommaterial.home.Home" android:label="home_fragment"
+              tools:layout="@layout/home_fragment">
+        <action android:id="@+id/action_home3_to_product2" app:destination="@id/product2"/>
+    </fragment>
+    <fragment android:id="@+id/product2" android:name="com.example.ecommaterial.singleproduct.Product"
+              android:label="product_fragment" tools:layout="@layout/product_fragment"/>
+</navigation>
