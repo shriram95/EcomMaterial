@@ -16,6 +16,10 @@ class HomeViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    init {
+        getProductsList()
+    }
+
     private fun getProductsList() {
         EcomApi.retrofitService.getProductList().enqueue(
             object: Callback<String> {

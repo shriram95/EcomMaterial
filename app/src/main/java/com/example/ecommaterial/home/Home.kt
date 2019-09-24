@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.ecommaterial.R
+import com.example.ecommaterial.databinding.HomeFragmentBinding
 
 class Home : Fragment() {
 
@@ -15,19 +16,19 @@ class Home : Fragment() {
         fun newInstance() = Home()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        val binding = HomeFragmentBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }
