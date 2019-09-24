@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.ecommaterial.network.EcomApi
+import com.example.ecommaterial.network.Product
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,12 +23,12 @@ class HomeViewModel : ViewModel() {
 
     private fun getProductsList() {
         EcomApi.retrofitService.getProductList().enqueue(
-            object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    _response.value = response.body()
+            object: Callback<List<Product>> {
+                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                    _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
                     _response.value = "Failure: " + t.message
                 }
             })
