@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.ecommaterial.network.EcomApi
 import com.example.ecommaterial.network.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,20 +21,29 @@ class HomeViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private var viewModelJob = Job()
+
+    private val coroutineScope = CoroutineScope(
+        viewModelJob + Dispatchers.Main )
+
     init {
         getProductsList()
     }
 
     private fun getProductsList() {
-        EcomApi.retrofitService.getProductList().enqueue(
-            object: Callback<List<Product>> {
-                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                    _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
-                }
+        coroutineScope.launch {
+            val getProductListDeferred = EcomApi.retrofitService.getProductList()
+            try {
+                val listResult = getProductListDeferred.await()
+                _response.value = "Success: ${listResult.size} Mars properties retrieved"
+            } catch (e: Exception) {
+                _response.value = "Failure: ${e.message}"
+            }
+        }
+    }
 
-                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                    _response.value = "Failure: " + t.message
-                }
-            })
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
