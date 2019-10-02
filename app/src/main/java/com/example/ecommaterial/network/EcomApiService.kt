@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL =
-    "https://android-kotlin-fun-mars-server.appspot.com"
+    "https://my-json-server.typicode.com/shriram95/dbjson/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -23,7 +23,7 @@ private val retrofit = Retrofit.Builder()
 
 
 interface EcomApiService {
-    @GET("realestate")
+    @GET("products")
     fun getProductList():
             Deferred<List<Product>>
 }

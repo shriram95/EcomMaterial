@@ -26,7 +26,7 @@ class ProductGridAdapter : ListAdapter<Product, ProductGridAdapter.ProductViewHo
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.title == newItem.title
         }
     }
 
