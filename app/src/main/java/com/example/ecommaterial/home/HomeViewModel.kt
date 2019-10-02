@@ -17,9 +17,13 @@ class HomeViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 
     private val _response = MutableLiveData<String>()
+    private val _products = MutableLiveData<List<Product>>()
 
     val response: LiveData<String>
         get() = _response
+
+    val products: LiveData<List<Product>>
+        get() = _products
 
     private var viewModelJob = Job()
 
@@ -36,6 +40,7 @@ class HomeViewModel : ViewModel() {
             try {
                 val listResult = getProductListDeferred.await()
                 _response.value = "Success: ${listResult.size} Mars properties retrieved"
+                _products.value = listResult
             } catch (e: Exception) {
                 _response.value = "Failure: ${e.message}"
             }

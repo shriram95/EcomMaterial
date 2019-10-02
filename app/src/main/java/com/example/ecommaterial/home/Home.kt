@@ -27,6 +27,7 @@ class Home : Fragment() {
         val binding = HomeFragmentBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+        binding.productGrid.adapter = ProductGridAdapter()
         return binding.root
     }
 
